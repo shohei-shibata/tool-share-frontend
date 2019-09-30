@@ -1,25 +1,64 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+
+import Home from './Pages/Home.js'
+import About from './Pages/About.js'
+import Search from './Pages/Search.js'
+import MyTools from './Pages/MyTools.js'
+import MyGroups from './Pages/MyGroups.js'
+import Settings from './Pages/Settings.js'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+	<Router>
+	        <div>
+	  	  <h1>Tools Sharing App</h1>
+	          <nav>
+	            <ul className="nav-links">
+	              <li>
+	                <Link to="/">Home</Link>
+	              </li>
+	  	      <li>
+	  		<Link to="/about">About</Link>
+	  	      </li>
+		      <li>
+	                <Link to="/search">Search</Link>
+	              </li>
+	  	      <li>
+	                <Link to="/my-tools">My Tools</Link>
+	              </li>
+		      <li>
+	                <Link to="/my-groups">My Groups</Link>
+	              </li>
+	  	      <li>
+	  		<Link to="/settings">Settings</Link>
+	  	      </li>
+	            </ul>
+	          </nav>
+	          
+	  	  <Switch>
+	  	    <Route path="/about">
+	  	      <About />
+	  	    </Route>
+	            <Route path="/search">
+	  	      <Search />
+	  	    </Route>
+	  	    <Route path="/my-tools">
+	  	      <MyTools />
+	  	    </Route>
+	  	    <Route path="/my-groups">
+	  	      <MyGroups />
+	  	    </Route>
+	  	    <Route path="/settings">
+	  	      <Settings />
+	  	    </Route>
+	            <Route path="/">
+	              <Home />
+	            </Route>
+	          </Switch>
+	        </div>
+      </Router>
   );
 }
 
