@@ -1,11 +1,11 @@
 import React from 'react';
-import Button from '../Components/Button.js'
+import SearchGroup from '../Groups/SearchGroup.js'
 
 function Search() {
 	return (
 		<div>
 			<h2>Search</h2>
-			<Button text="Button" />
+			<SearchGroup />
 		</div>
 	);
 }
