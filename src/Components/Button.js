@@ -1,8 +1,12 @@
 import React from 'react';
 
-const Button = ({text}) => {
+const Button = ({text, type, onSubmit}) => {
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		onSubmit();
+	}
 	return (
-		<button>{text}</button>
+		<button type={type} onClick={handleSubmit}>{text}</button>
 	);
 }
 
