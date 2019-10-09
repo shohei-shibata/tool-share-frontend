@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import TextInput from '../Components/TextInput.js'
-import Button from '../Components/Button.js'
+import ButtonDefault from '../Components/ButtonDefault.js'
 import Label from '../Components/Label.js'
 
 const initialState = "";
@@ -22,7 +22,7 @@ const SearchGroup = () => {
 				value={textInput} 
 				onChange={(newText)=> setTextInput( newText )} 
 			/>
-			<Button type='submit' text='Search' onSubmit={handleSubmit}/>
+			<ButtonDefault type='submit' text='Search' onSubmit={handleSubmit}/>
 		</form>
 	);
 }
