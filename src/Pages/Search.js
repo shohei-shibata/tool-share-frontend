@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import SearchGroup from '../Groups/SearchGroup.js'
+import SearchGroup from '../Groups/Search.js'
 
 import requestApi from '../Utility/requestApi.js'
 

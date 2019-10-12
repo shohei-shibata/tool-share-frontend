@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import TextInput from '../Components/TextInput.js'
-import ButtonDefault from '../Components/ButtonDefault.js'
-import Label from '../Components/Label.js'
+import TextInput from '../Components/Input/Text'
+import ButtonDefault from '../Components/Button/Default'
+import LabelDefault from '../Components/Label/Default'
 
 const initialState = "";
 
@@ -13,7 +13,7 @@ const SearchGroup = () => {
 	}
 	return (
 		<form>
-			<Label forId='search-input' text="Type in a tool name to see what's available to borrow." />
+			<LabelDefault forId='search-input' text="Type in a tool name to see what's available to borrow." />
 			<br/>
 			<TextInput 
 				id='search-input' 

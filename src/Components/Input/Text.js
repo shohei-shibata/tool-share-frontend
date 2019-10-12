@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Input = () => {
+const TextInput = () => {
 	const [ input ] = useState('');
 	const handleChange = (e) => {
 		
@@ -10,4 +10,4 @@ const Input = () => {
 	);
 }
 
-export default Input;
+export default TextInput;
