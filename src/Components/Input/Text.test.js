@@ -1,44 +1,45 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, fireEvent, cleanup } from '@testing-library/react';
 
 import TextInput from './Text'
 
 describe('Input', () => {
+	afterEach(cleanup);
+
 	const props = {
-		value: 'testing',
 		name: 'someName',
 		placeholder: 'placeholder text',
-		onChange: () => {
-			return null;
-		}
 	};
+	const { container }  = render(
+		<TextInput {...props} />
+	);
+	const inputNode = container.querySelector('input');
 	it('should render', () => {
 		render(<TextInput />);
 	});
 	it('has type of text', () => {
-		const { container }  = render(<TextInput />);
-		const inputNode = container.querySelector('input');
 		expect(inputNode.type).toBe('text');
 	});
-	
+	it('accepts a placeholder prop and uses it as its placeholder', () => {
+		expect(inputNode.placeholder).toBe(props.placeholder);
+	});
+	it('accepts a name prop and uses it as its name', () => {
+		expect(inputNode.name).toBe(props.name);
+	});
+	it('triggers the onChange function when user changes its value', () => {
+		const handleChange = (e) => {
+			expect(e.target.value).toBe('new value');
+		};
+		const { getByTestId } = render(
+			<TextInput 
+				onChange={handleChange} 
+				data-testid='onChange-test' 
+				value='initial value' 
+			/>
+		);
+		const node = getByTestId('onChange-test');
+		expect(node.value).toBe('initial value');
+		fireEvent.change(node, { target: { value: 'new value' }});
+	});
 });
 
-/*
- * import React from 'react';
- * const TextInput = ({ name, placeholder, value, onChange }) => {
- * const handleChange = (e) => { 
- * 	onChange(e.target.value); 
- * }
- *
- * return (
- * 	<input 
- * 	name={name} 
- * 	type='text' 
- * 	placeholder={placeholder} 
- * 	value={value}
- * 	onChange={handleChange} />
- * 	);
- * }
- *
- * export default TextInput;
- */
