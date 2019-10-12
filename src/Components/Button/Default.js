@@ -1,10 +1,7 @@
 import React from 'react';
 
-const ButtonDefault = ({ type, text, onSubmit}) => {
-	const handleClick = (e) => {
-		onSubmit(e.target.value);
-	}
-	return <button type={type} onClick={handleClick}>{text}</button>
+const ButtonDefault = (props) => {
+	return <button {...props} ></button>
 }
 
 export default ButtonDefault;
