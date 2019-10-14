@@ -1,29 +1,60 @@
-import React, { useState } from 'react'
-import TextInput from '../Components/Input/Text'
-import ButtonDefault from '../Components/Button/Default'
-import LabelDefault from '../Components/Label/Default'
+import React, { useState } from 'react';
+import TextInput from '../Components/Input/Text';
+import LabelDefault from '../Components/Label/Default';
 
-const initialState = "";
+// To Be Refactored to separate modules:
+import fakeTools from '../mock_data/fakeTools';
+const nameMatches = (keyword, dataString) => {
+	if (keyword.length > 1) {
+		let regex = new RegExp(keyword);
+		return regex.test(dataString);
+	} else {
+		return false;
+	}
+};
+
 
 const SearchGroup = () => {
+	const label = '';
+	const placeholder = 'Type in a tool name';
+	const initialState = '';
 	const [ textInput, setTextInput ] = useState(initialState);
-	const handleSubmit = () => {
-		console.log("Submit: " + textInput);
-		setTextInput(initialState)
-	}
+	const handleChange = (e) => {
+		setTextInput(e.target.value);
+	};
+	const handleSubmit = (e) => {
+		e.preventDefault();
+	};
+	const filteredTools = () => {
+		let arr = fakeTools.filter(tool => {
+			return nameMatches(textInput, tool.name);
+		});
+		return arr;
+	};
 	return (
-		<form>
-			<LabelDefault forId='search-input' text="Type in a tool name to see what's available to borrow." />
-			<br/>
-			<TextInput 
-				id='search-input' 
-				name='search-input' 
-				placeholder='Type a tool name' 
-				value={textInput} 
-				onChange={(newText)=> setTextInput( newText )} 
-			/>
-			<ButtonDefault type='submit' text='Search' onSubmit={handleSubmit}/>
-		</form>
+		<div>
+			<form onSubmit={handleSubmit}>
+				<LabelDefault forId='search' text={ label } />
+				<br/>
+				<TextInput 
+					data-testid='search-input'
+					id='search' 
+					name='search-input' 
+					placeholder={placeholder} 
+					value={textInput} 
+					onChange={handleChange} 
+				/>
+			</form>
+			<div>
+				<h3>Search Results:</h3>
+				<ul>{ 
+					let arr = filteredTools();
+					arr.map(tool => {
+					return <li>{tool.name}</li> 
+				  })
+				}</ul>
+			</div>
+		</div>
 	);
 }
 

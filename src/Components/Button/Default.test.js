@@ -18,7 +18,7 @@ describe('Default Button component', () => {
 		render(<ButtonDefault />);
 	});
 	it('accepts a value prop and applies it as its text', () => {
-		expect(node.value).toBe(props.value);
+		expect(node.innerHTML).toBe(props.value);
 	});
 	it('fires an onClick even when clicked', () => {
 		fireEvent.click(node);
