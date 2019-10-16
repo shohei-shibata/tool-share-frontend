@@ -1,36 +1,30 @@
 import React, { useState } from 'react';
 import TextInput from '../Components/Input/Text';
 import LabelDefault from '../Components/Label/Default';
+import Tools from '../Helper/Tools';
 
 // To Be Refactored to separate modules:
 import fakeTools from '../mock_data/fakeTools';
-const nameMatches = (keyword, dataString) => {
-	if (keyword.length > 1) {
-		let regex = new RegExp(keyword);
-		return regex.test(dataString);
-	} else {
-		return false;
-	}
-};
-
 
 const SearchGroup = () => {
 	const label = '';
 	const placeholder = 'Type in a tool name';
-	const initialState = '';
-	const [ textInput, setTextInput ] = useState(initialState);
+	const initialTextInput = '';
+	const allTools = fakeTools;
+
+	const [ textInput, setTextInput ] = useState(initialTextInput);
+	const [ tools, setTools ] = useState(fakeTools);
 	const handleChange = (e) => {
-		setTextInput(e.target.value);
+		const newValue = e.target.value;
+		setTextInput(newValue);
+		setTools(Tools.filterToolsByKeyword(newValue, allTools));
 	};
 	const handleSubmit = (e) => {
 		e.preventDefault();
 	};
-	const filteredTools = () => {
-		let arr = fakeTools.filter(tool => {
-			return nameMatches(textInput, tool.name);
-		});
-		return arr;
-	};
+	const toolsList = tools.map(tool => {
+		return <li key={tool._id}>{tool.name} ({tool.owner.name})</li> 
+	}); 
 	return (
 		<div>
 			<form onSubmit={handleSubmit}>
@@ -47,12 +41,7 @@ const SearchGroup = () => {
 			</form>
 			<div>
 				<h3>Search Results:</h3>
-				<ul>{ 
-					let arr = filteredTools();
-					arr.map(tool => {
-					return <li>{tool.name}</li> 
-				  })
-				}</ul>
+				<ul>{ tools.length > 0 ? toolsList : <li>No Matches!</li> }</ul>
 			</div>
 		</div>
 	);
