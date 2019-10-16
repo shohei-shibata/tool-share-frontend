@@ -5,4 +5,4 @@ const fakeGroups = [{
     "toolList": [1, 2, 3]
 }]
 
-export default fakeGroups
+export default fakeGroups;

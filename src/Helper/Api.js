@@ -1,6 +1,6 @@
 import fakeGroups from '../mock_data/Groups.js'
 
-const requestApi = {
+const Api = {
 
 	getMyGroups: (myUserId) => {
 		return fakeGroups
@@ -8,4 +8,4 @@ const requestApi = {
 
 }
 
-export default requestApi;
+export default Api;

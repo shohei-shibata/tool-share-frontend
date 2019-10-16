@@ -1,16 +1,16 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import SearchGroup from '../Search';
+import ToolsSearch from '../ToolsSearch';
 
-describe('Search Group', () => {
+describe('Tools Search Group', () => {
 	const props = {
 		label: 'search'		
 	};
 	it('renders without crashing', () => {
-		render(<SearchGroup />);
+		render(<ToolsSearch />);
 	});
 	it('has an input field', () => {
-		const { getByTestId } = render(<SearchGroup {...props} />);
+		const { getByTestId } = render(<ToolsSearch {...props} />);
 		const inputNode = getByTestId('search-input');
 	});
 	it('triggers an onChange function on input field change', () => {
@@ -18,7 +18,7 @@ describe('Search Group', () => {
 			expect(e.target.value).toBe('hello world');
 		};
 		const { getByTestId } = render(
-			<SearchGroup 
+			<ToolsSearch 
 				onChange={handleChange} 
 			/>
 		);
