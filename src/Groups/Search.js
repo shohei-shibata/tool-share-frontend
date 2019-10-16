@@ -37,6 +37,7 @@ const SearchGroup = () => {
 					placeholder={placeholder} 
 					value={textInput} 
 					onChange={handleChange} 
+					autoFocus={true}
 				/>
 			</form>
 			<div>
