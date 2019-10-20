@@ -14,7 +14,7 @@ const fakeTools = [{
 	    _id: 125,
 	    name: 'Matt'
     },
-    "accessibleGroups": [9, 7],
+    "accessibleGroups": [9],
     "note": "put holes in ground"
 }, {
     "_id": 3,
@@ -23,7 +23,7 @@ const fakeTools = [{
 	    _id: 126,
 	    name: 'Steve'
     },
-    "accessibleGroups": [9, 7],
+    "accessibleGroups": [8, 7],
     "note": "water sold separated"
 }];
 

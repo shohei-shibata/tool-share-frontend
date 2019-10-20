@@ -6,8 +6,23 @@ const Tools = {
 			})
 		:
 			tools
+	},
+	filterToolsByGroups: (groups, tools) => {
+		console.log('filterToolsByGroups', groups, tools);
+		let filteredTools = tools.filter(tool => {
+			let found = false;
+			console.log(tool);
+			groups.forEach(group => {
+				console.log(group, tool.accessibleGroups);
+				if (tool.accessibleGroups.includes(group)) {
+					found = true;
+				}
+			});
+			return found;
+		});
+		console.log('filteredTools', filteredTools);
+		return filteredTools;
 	}
-
 };
 
 export default Tools;
