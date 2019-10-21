@@ -7,17 +7,29 @@ import Tools from '../Helper/Tools';
 // Move these into the API helper
 import fakeTools from '../mock_data/fakeTools';
 import fakeGroups from '../mock_data/fakeGroups';
-
+const getCheckedGroupsArray = (groupsState) => {
+	const onlyChecked = groupsState.filter(each => {
+		return each.checked;
+	});
+	return onlyChecked.map(each => { return  each._id });
+};
 const ToolsSearch = () => {
 	const label = '';
 	const placeholder = 'Type in a tool name';
 	const initialTextInput = '';
 	const allTools = fakeTools;
 	const allGroups = fakeGroups;
+	const groupsInitialState = fakeGroups.map(group => {
+		return {
+			_id: group._id,
+			name: group.name,
+			checked: true
+		};
+	});
 
 	const [ textInput, setTextInput ] = useState(initialTextInput);
 	const [ tools, setTools ] = useState(fakeTools);
-	const [ groups, setGroups ] = useState(fakeGroups);
+	const [ groups, setGroups ] = useState(groupsInitialState);	
 
 	const handleInputChange = (e) => {
 		const newValue = e.target.value;
@@ -25,9 +37,16 @@ const ToolsSearch = () => {
 		setTools(Tools.filterToolsByKeyword(newValue, allTools));
 	};
 	const handleCheckboxChange = (e) => {
-		console.log('handle checkbox change', e.target.value, e.target.checked);
-		// check all checkboxes and make array of selected group ID's
-		setTools(Tools.filterToolsByGroups([7], allTools)); // let's say only 7 is checked
+		let nextGroupsState = groups.map(group => {
+			let nextGroup = Object.assign({}, group);
+			if (group._id.toString() === e.target.value) {
+				nextGroup.checked = e.target.checked;
+			}
+			return nextGroup;
+		});
+		setGroups(nextGroupsState);
+		let checkedGroupsArray = getCheckedGroupsArray(nextGroupsState);
+		setTools(Tools.filterToolsByGroups(checkedGroupsArray,  allTools)); 
 	};
 	const handleSubmit = (e) => {
 		e.preventDefault();
