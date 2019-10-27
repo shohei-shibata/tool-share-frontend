@@ -1,10 +1,15 @@
-import fakeGroups from '../mock_data/Groups.js'
+import fakeGroups from '../mock_data/fakeGroups'
+import fakeTools from '../mock_data/fakeTools'
 
 const Api = {
 
-	getMyGroups: (myUserId) => {
-		return fakeGroups
+	getGroupsByIds: (myUserId) => {
+		return fakeGroups;
+	},
+	getToolsByGroupIds: (arrOfIds) => {
+		return fakeTools;
 	}
+
 
 }
 
