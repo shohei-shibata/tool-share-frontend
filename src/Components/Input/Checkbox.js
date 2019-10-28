@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Checkbox = ({value, text, onChange}) => {
+const Checkbox = ({value, text, onChange, checked}) => {
 	return (
 		<div>
 			<label>
@@ -8,6 +8,7 @@ const Checkbox = ({value, text, onChange}) => {
 				type='checkbox' 
 				value={value} 
 				onChange={onChange}
+				checked={checked}
 			/>
 				{text.toString()}
 			</label>

@@ -12,7 +12,7 @@ const getCheckedGroupsArray = (groupsState) => {
 	const onlyChecked = groupsState.filter(each => {
 		return each.checked;
 	});
-	return onlyChecked.map(each => { return  each._id });
+	return onlyChecked.map(each => { return  each.data._id });
 };
 
 const ToolsSearch = () => {
@@ -25,8 +25,7 @@ const ToolsSearch = () => {
 	const initialTextInput = '';
 	const groupsInitialState = allGroups.map(group => {
 		return {
-			_id: group._id,
-			name: group.name,
+			data: group,
 			checked: true
 		};
 	});
@@ -43,7 +42,7 @@ const ToolsSearch = () => {
 	const handleCheckboxChange = (e) => {
 		let nextGroupsState = groups.map(group => {
 			let nextGroup = Object.assign({}, group);
-			if (group._id.toString() === e.target.value) {
+			if (group.data._id.toString() === e.target.value) {
 				nextGroup.checked = e.target.checked;
 			}
 			return nextGroup;
@@ -62,9 +61,10 @@ const ToolsSearch = () => {
 		return (
 			<li key={group._id}>
 				<Checkbox 
-					value={group._id} 
-					text={group.name} 
+					value={group.data._id} 
+					text={group.data.name} 
 					onChange={handleCheckboxChange}
+					checked={group.checked}
 				/>
 			</li>
 		);
