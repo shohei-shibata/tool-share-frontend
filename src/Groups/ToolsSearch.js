@@ -3,23 +3,27 @@ import TextInput from '../Components/Input/Text';
 import Checkbox from '../Components/Input/Checkbox';
 import LabelDefault from '../Components/Label/Default';
 import Tools from '../Helper/Tools';
+import Api from '../Helper/Api';
+
+import {useUser} from '../context/user-context';
 
 // Move these into the API helper
-import fakeTools from '../mock_data/fakeTools';
-import fakeGroups from '../mock_data/fakeGroups';
 const getCheckedGroupsArray = (groupsState) => {
 	const onlyChecked = groupsState.filter(each => {
 		return each.checked;
 	});
 	return onlyChecked.map(each => { return  each._id });
 };
+
 const ToolsSearch = () => {
+	const user = useUser();
+	const allTools = Api.getToolsByGroupIds(user.groupBelong);
+	const allGroups = Api.getGroupsByIds(user.groupBelong);
+
 	const label = '';
 	const placeholder = 'Type in a tool name';
 	const initialTextInput = '';
-	const allTools = fakeTools;
-	const allGroups = fakeGroups;
-	const groupsInitialState = fakeGroups.map(group => {
+	const groupsInitialState = allGroups.map(group => {
 		return {
 			_id: group._id,
 			name: group.name,
@@ -28,7 +32,7 @@ const ToolsSearch = () => {
 	});
 
 	const [ textInput, setTextInput ] = useState(initialTextInput);
-	const [ tools, setTools ] = useState(fakeTools);
+	const [ tools, setTools ] = useState(allTools);
 	const [ groups, setGroups ] = useState(groupsInitialState);	
 
 	const handleInputChange = (e) => {

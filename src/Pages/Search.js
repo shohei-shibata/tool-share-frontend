@@ -3,7 +3,7 @@ import ToolsSearch from '../Groups/ToolsSearch';
 
 import Api from '../Helper/Api';
 
-function Search({user}) {
+function Search() {
 	return (
 		<div>
 			<h2>Search</h2>
