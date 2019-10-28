@@ -1,4 +1,4 @@
-{
+const fakeTools = [{
     "_id": 1,
     "name": "hammer",
     "owner": 123,
@@ -16,4 +16,8 @@
     "owner": 123,
     "accessibleGroups": [9, 7],
     "note": "water sold separated"
-}
+}];
+
+export default fakeTools;
+
+

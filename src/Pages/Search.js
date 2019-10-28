@@ -1,23 +1,13 @@
 import React, { useState } from 'react';
-import SearchGroup from '../Groups/SearchGroup.js'
+import ToolsSearch from '../Groups/ToolsSearch';
 
-import requestApi from '../Utility/requestApi.js'
+import Api from '../Helper/Api';
 
-function Search() {
-	const [ myGroups, setMyGroups ] = useState(requestApi.getMyGroups());
-	const myGroupsList = myGroups.map(group => {
-		return <li key={group._id.toString()}>{group.name}</li>
-	});
-
+function Search({user}) {
 	return (
 		<div>
 			<h2>Search</h2>
-			<SearchGroup />
-			<p>NOTE: We might want to do away with a Submit button and instead search as you type "onChange"</p>
-			<h3>My Groups:</h3>
-			<ul>{myGroupsList}</ul>
-			<h3>Searchable Tools:</h3>
-			<ul></ul>
+			<ToolsSearch />
 		</div>
 	);
 }

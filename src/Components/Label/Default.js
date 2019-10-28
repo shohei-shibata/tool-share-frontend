@@ -1,9 +1,9 @@
 import React from 'react'
 
-const Label = ({ forId, text }) => {
+const LabelDefault = ({ forId, text }) => {
 	return (
 		<label htmlFor={forId}>{text}</label>
 	);
 }
 
-export default Label;
+export default LabelDefault;
