@@ -6,6 +6,8 @@ import Tools from '../Helper/Tools';
 import Api from '../Helper/Api';
 
 import {useUser} from '../context/user-context';
+import {useUserTools} from '../context/user-tools-context';
+import {useUserGroups} from '../context/user-groups-context';
 
 // Move these into the API helper
 const getCheckedGroupsArray = (groupsState) => {
@@ -17,13 +19,13 @@ const getCheckedGroupsArray = (groupsState) => {
 
 const ToolsSearch = () => {
 	const user = useUser();
-	const allTools = Api.getToolsByGroupIds(user.groupBelong);
-	const allGroups = Api.getGroupsByIds(user.groupBelong);
+	const userTools = useUserTools();
+	const userGroups = useUserGroups();
 
 	const label = '';
 	const placeholder = 'Type in a tool name';
 	const initialTextInput = '';
-	const groupsInitialState = allGroups.map(group => {
+	const groupsInitialState = userGroups.map(group => {
 		return {
 			data: group,
 			checked: true
@@ -31,13 +33,13 @@ const ToolsSearch = () => {
 	});
 
 	const [ textInput, setTextInput ] = useState(initialTextInput);
-	const [ tools, setTools ] = useState(allTools);
+	const [ tools, setTools ] = useState(userTools);
 	const [ groups, setGroups ] = useState(groupsInitialState);	
 
 	const handleInputChange = (e) => {
 		const newValue = e.target.value;
 		setTextInput(newValue);
-		setTools(Tools.filterToolsByKeyword(newValue, allTools));
+		setTools(Tools.filterToolsByKeyword(newValue, userTools));
 	};
 	const handleCheckboxChange = (e) => {
 		let nextGroupsState = groups.map(group => {
@@ -49,7 +51,7 @@ const ToolsSearch = () => {
 		});
 		setGroups(nextGroupsState);
 		let checkedGroupsArray = getCheckedGroupsArray(nextGroupsState);
-		setTools(Tools.filterToolsByGroups(checkedGroupsArray,  allTools)); 
+		setTools(Tools.filterToolsByGroups(checkedGroupsArray,  userTools)); 
 	};
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -71,6 +73,8 @@ const ToolsSearch = () => {
 	});
 	return (
 		<div id='tool-search'>
+			<p>{JSON.stringify(userTools)}</p>
+			<p>{JSON.stringify(userGroups)}</p>
 			<form onSubmit={handleSubmit}>
 				<LabelDefault forId='search' text={ label } />
 				<br/>
