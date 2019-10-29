@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ToolsList from './ToolsList';
 import TextInput from '../Components/Input/Text';
 import Checkbox from '../Components/Input/Checkbox';
 import LabelDefault from '../Components/Label/Default';
@@ -56,9 +57,6 @@ const ToolsSearch = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 	};
-	const toolsList = tools.map(tool => {
-		return <li key={tool._id}>{tool.name} ({tool.owner.name})</li> 
-	}); 
 	const groupsList = groups.map(group => {
 		return (
 			<li key={group._id}>
@@ -92,7 +90,7 @@ const ToolsSearch = () => {
 			</form>
 			<div>
 				<h3>Search Results:</h3>
-				<ul>{ tools.length > 0 ? toolsList : <li>No Matches!</li> }</ul>
+				<ul>{ tools.length > 0 ? <ToolsList tools={tools} /> : <li>No Matches!</li> }</ul>
 			</div>
 		</div>
 	);
