@@ -4,9 +4,7 @@ import TextInput from '../Components/Input/Text';
 import Checkbox from '../Components/Input/Checkbox';
 import LabelDefault from '../Components/Label/Default';
 import Tools from '../Helper/Tools';
-import Api from '../Helper/Api';
 
-import {useUser} from '../context/user-context';
 import {useUserTools} from '../context/user-tools-context';
 import {useUserGroups} from '../context/user-groups-context';
 
@@ -19,7 +17,6 @@ const getCheckedGroupsArray = (groupsState) => {
 };
 
 const ToolsSearch = () => {
-	const user = useUser();
 	const userTools = useUserTools();
 	const userGroups = useUserGroups();
 
