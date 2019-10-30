@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ToolsSearch from '../Groups/ToolsSearch';
-
-import Api from '../Helper/Api';
 
 function Search() {
 	return (

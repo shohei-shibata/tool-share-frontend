@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import ToolsList from './ToolsList';
 import TextInput from '../Components/Input/Text';
 import Checkbox from '../Components/Input/Checkbox';
-import LabelDefault from '../Components/Label/Default';
 import Tools from '../Helper/Tools';
 
 import {useUserTools} from '../context/user-tools-context';
@@ -20,7 +19,6 @@ const ToolsSearch = () => {
 	const userTools = useUserTools();
 	const userGroups = useUserGroups();
 
-	const label = '';
 	const placeholder = 'Type in a tool name';
 	const initialTextInput = '';
 	const groupsInitialState = userGroups.map(group => {
@@ -71,8 +69,6 @@ const ToolsSearch = () => {
 			<p>{JSON.stringify(userTools)}</p>
 			<p>{JSON.stringify(userGroups)}</p>
 			<form onSubmit={handleSubmit}>
-				<LabelDefault forId='search' text={ label } />
-				<br/>
 				<TextInput 
 					data-testid='search-input'
 					id='search' 
