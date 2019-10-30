@@ -3,10 +3,10 @@ import fakeTools from '../mock_data/fakeTools'
 
 const Api = {
 
-	getGroupsByIds: (myUserId) => {
+	getGroupsByIds: (arrOfGroupIds) => {
 		return fakeGroups;
 	},
-	getToolsByGroupIds: (arrOfIds) => {
+	getToolsByGroupIds: (arrOfGroupIds) => {
 		return fakeTools;
 	}
 

@@ -1,75 +1,74 @@
 import React, { useState } from 'react';
+import ToolsList from './ToolsList';
 import TextInput from '../Components/Input/Text';
 import Checkbox from '../Components/Input/Checkbox';
-import LabelDefault from '../Components/Label/Default';
 import Tools from '../Helper/Tools';
 
+import {useUserTools} from '../context/user-tools-context';
+import {useUserGroups} from '../context/user-groups-context';
+
 // Move these into the API helper
-import fakeTools from '../mock_data/fakeTools';
-import fakeGroups from '../mock_data/fakeGroups';
 const getCheckedGroupsArray = (groupsState) => {
 	const onlyChecked = groupsState.filter(each => {
 		return each.checked;
 	});
-	return onlyChecked.map(each => { return  each._id });
+	return onlyChecked.map(each => { return  each.data._id });
 };
+
 const ToolsSearch = () => {
-	const label = '';
+	const userTools = useUserTools();
+	const userGroups = useUserGroups();
+
 	const placeholder = 'Type in a tool name';
 	const initialTextInput = '';
-	const allTools = fakeTools;
-	const allGroups = fakeGroups;
-	const groupsInitialState = fakeGroups.map(group => {
+	const groupsInitialState = userGroups.map(group => {
 		return {
-			_id: group._id,
-			name: group.name,
+			data: group,
 			checked: true
 		};
 	});
 
 	const [ textInput, setTextInput ] = useState(initialTextInput);
-	const [ tools, setTools ] = useState(fakeTools);
+	const [ tools, setTools ] = useState(userTools);
 	const [ groups, setGroups ] = useState(groupsInitialState);	
 
 	const handleInputChange = (e) => {
 		const newValue = e.target.value;
 		setTextInput(newValue);
-		setTools(Tools.filterToolsByKeyword(newValue, allTools));
+		setTools(Tools.filterToolsByKeyword(newValue, userTools));
 	};
 	const handleCheckboxChange = (e) => {
 		let nextGroupsState = groups.map(group => {
 			let nextGroup = Object.assign({}, group);
-			if (group._id.toString() === e.target.value) {
+			if (group.data._id.toString() === e.target.value) {
 				nextGroup.checked = e.target.checked;
 			}
 			return nextGroup;
 		});
 		setGroups(nextGroupsState);
 		let checkedGroupsArray = getCheckedGroupsArray(nextGroupsState);
-		setTools(Tools.filterToolsByGroups(checkedGroupsArray,  allTools)); 
+		setTools(Tools.filterToolsByGroups(checkedGroupsArray,  userTools)); 
 	};
 	const handleSubmit = (e) => {
 		e.preventDefault();
 	};
-	const toolsList = tools.map(tool => {
-		return <li key={tool._id}>{tool.name} ({tool.owner.name})</li> 
-	}); 
 	const groupsList = groups.map(group => {
 		return (
 			<li key={group._id}>
 				<Checkbox 
-					value={group._id} 
-					text={group.name} 
+					value={group.data._id} 
+					text={group.data.name} 
 					onChange={handleCheckboxChange}
+					checked={group.checked}
 				/>
 			</li>
 		);
 	});
 	return (
 		<div id='tool-search'>
+			<p>{JSON.stringify(userTools)}</p>
+			<p>{JSON.stringify(userGroups)}</p>
 			<form onSubmit={handleSubmit}>
-				<LabelDefault forId='search' text={ label } />
-				<br/>
 				<TextInput 
 					data-testid='search-input'
 					id='search' 
@@ -84,7 +83,7 @@ const ToolsSearch = () => {
 			</form>
 			<div>
 				<h3>Search Results:</h3>
-				<ul>{ tools.length > 0 ? toolsList : <li>No Matches!</li> }</ul>
+				<ul>{ tools.length > 0 ? <ToolsList tools={tools} /> : <li>No Matches!</li> }</ul>
 			</div>
 		</div>
 	);
