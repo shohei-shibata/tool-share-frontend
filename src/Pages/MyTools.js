@@ -7,16 +7,17 @@ import Checkbox from '../Components/Input/Checkbox';
 import ButtonDefault from '../Components/Button/Default';
 
 function MyTools() {
-	const tools = useUserTools();
+	const {tools, addTool} = useUserTools();
 	const user = useUser();
 	const groups = useUserGroups();
-	const [newTool, setNewTool] = useState({
+	const newToolInitialState = {
 		_id: '',
 		name: '',
 		owner: {_id: user._id, name: user.name},
 		accessibleGroups: user.groupBelong, 
 		note: ''
-	});
+	}
+	const [newTool, setNewTool] = useState(newToolInitialState);
 	const handleInputChange = (e) => {
 		console.log('change', e.target.name, e.target.value);
 		let newState = Object.assign({}, newTool);
@@ -24,11 +25,38 @@ function MyTools() {
 		setNewTool(newState);
 	}
 	const handleCheckboxChange = (e) => {
-		console.log('change checkbox', e.target.value);
+		console.log('change checkbox', e.target.value, e.target.checked);
+		let newGroups = [...newTool.accessibleGroups];
+		console.log('accessible Groups', newGroups);
+		let index = newGroups.indexOf(e.target.value);
+		if (e.target.checked) {
+			if (index >= 0) { console.log('already exists') }
+			else { 
+				let newState = Object.assign({}, newTool);
+				console.log(newState);
+				newState.accessibleGroups.push(e.target.value);
+				console.log(newState);
+				setNewTool(newState);
+			} 
+		} else {
+			console.log('uncheck');
+			if (index >= 0) {
+				let newState = Object.assign({}, newTool);
+				newState.accessibleGroups.splice(index, 1);
+				setNewTool(newState);
+			} else {
+				console.log('group id not found');
+			}
+		}
 	}
-	const addTool = (e) => {
+	const shouldGroupBeChecked = (id) => {
+		if (newTool.accessibleGroups.indexOf(id) >= 0) { return true }
+		return false;
+	}
+	const handleSubmitNewTool = (e) => {
 		e.preventDefault();
-		console.log('add a tool');
+		addTool(newTool);
+		setNewTool(newToolInitialState);
 	}
 	return (
 		<div>
@@ -41,17 +69,19 @@ function MyTools() {
 				})
 			}
 			</ul>
-			<form onSubmit={addTool}>
+			<h2>Add a new Tool</h2>
+			<form onSubmit={handleSubmitNewTool}>
 				<TextInput placeholder='Name' name='name' onChange={handleInputChange} />	
 				<TextInput placeholder='Note' name='note' onChange={handleInputChange} />	
 				<ul>
 					{ groups.map(group => {
-						console.log(JSON.stringify(group));
 						return (
 							<Checkbox 
+								key={group._id}
 								value={group._id} 
 								text={group.name} 
 								onChange={handleCheckboxChange}
+								checked={shouldGroupBeChecked(group._id)}
 							/>		
 						);
 					}) }
