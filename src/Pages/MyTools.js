@@ -19,27 +19,21 @@ function MyTools() {
 	}
 	const [newTool, setNewTool] = useState(newToolInitialState);
 	const handleInputChange = (e) => {
-		console.log('change', e.target.name, e.target.value);
 		let newState = Object.assign({}, newTool);
 		newState[e.target.name] = e.target.value;
 		setNewTool(newState);
 	}
 	const handleCheckboxChange = (e) => {
-		console.log('change checkbox', e.target.value, e.target.checked);
 		let newGroups = [...newTool.accessibleGroups];
-		console.log('accessible Groups', newGroups);
 		let index = newGroups.indexOf(e.target.value);
 		if (e.target.checked) {
 			if (index >= 0) { console.log('already exists') }
 			else { 
 				let newState = Object.assign({}, newTool);
-				console.log(newState);
 				newState.accessibleGroups.push(e.target.value);
-				console.log(newState);
 				setNewTool(newState);
 			} 
 		} else {
-			console.log('uncheck');
 			if (index >= 0) {
 				let newState = Object.assign({}, newTool);
 				newState.accessibleGroups.splice(index, 1);
@@ -71,8 +65,8 @@ function MyTools() {
 			</ul>
 			<h2>Add a new Tool</h2>
 			<form onSubmit={handleSubmitNewTool}>
-				<TextInput placeholder='Name' name='name' onChange={handleInputChange} />	
-				<TextInput placeholder='Note' name='note' onChange={handleInputChange} />	
+				<TextInput placeholder='Name' name='name' value={newTool.name} onChange={handleInputChange} />	
+				<TextInput placeholder='Note' name='note' value={newTool.note} onChange={handleInputChange} />	
 				<ul>
 					{ groups.map(group => {
 						return (
@@ -88,8 +82,6 @@ function MyTools() {
 				</ul>
 				<ButtonDefault value='Add a Tool' type='submit' />
 			</form>
-			<span>Tool to add: </span>
-			<span>{JSON.stringify(newTool)}</span>
 		</div>
 	);
 }
