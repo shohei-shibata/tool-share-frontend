@@ -7,7 +7,7 @@ import Checkbox from '../Components/Input/Checkbox';
 import ButtonDefault from '../Components/Button/Default';
 
 function MyTools() {
-	const {tools, addTool} = useUserTools();
+	const {tools, addTool, removeTool} = useUserTools();
 	const user = useUser();
 	const groups = useUserGroups();
 	const newToolInitialState = {
@@ -52,14 +52,29 @@ function MyTools() {
 		addTool(newTool);
 		setNewTool(newToolInitialState);
 	}
+	const handleRemoveTool = (e) => {
+		const toolName = e.target.innerText;
+		const confirmText = `Are you sure you want to delete ${toolName}?`
+		if (window.confirm(confirmText)) {
+			const toolToDelete = tools.filter(tool => {
+				return tool.name === toolName;
+			});
+			if (toolToDelete.length === 1) {
+				removeTool(toolToDelete[0]._id);
+			} else if (toolToDelete.length < 0) {
+				console.log('Remove Tool: no entries found');
+			} else {
+				console.log('Remove Tool: more than one entries found');
+			}
+		}
+	}
 	return (
 		<div>
 			<h2>My Tools</h2>
-			<p>{JSON.stringify(tools)}</p>
 			<ul>
 			{
 				tools.map(tool => {
-					return <li key={tool._id}>{`${tool.name} (${tool.owner.name})`}</li>
+					return <li key={tool._id}>{tool.name}</li>
 				})
 			}
 			</ul>
@@ -82,6 +97,14 @@ function MyTools() {
 				</ul>
 				<ButtonDefault value='Add a Tool' type='submit' />
 			</form>
+			<h2>Delete a Tool</h2>
+			<ul>
+				{tools.map(tool => {
+					return (
+						<li key={tool._id} onClick={handleRemoveTool}>{tool.name}</li>
+					);
+				})}
+			</ul>
 		</div>
 	);
 }

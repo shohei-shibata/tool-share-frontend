@@ -27,9 +27,16 @@ const UserToolsProvider = (props) => {
 		tool._id = (Math.random() * 1000).toFixed(0) ;
 		setTools([...tools, tool]);
 	}
+	const removeTool = (toolId) => {
+		console.log('removeTool', toolId);
+		setTools(tools.filter(tool => {
+			return tool._id !== toolId;
+		}));
+	}
 	return <UserToolsContext.Provider value={{
 		tools: tools,
-		addTool: addTool
+		addTool: addTool,
+		removeTool: removeTool
 	}} {...props} />
 }
 
