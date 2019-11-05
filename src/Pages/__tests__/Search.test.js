@@ -1,10 +1,9 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import App from './App';
+import Search from '../Search';
 
-describe('App', () => {
+describe('Search page', () => {
 	it('renders without crashing', () => {
-		render(<App />);
+		render(<Search />);
 	});
 });
-

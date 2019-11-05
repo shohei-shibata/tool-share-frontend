@@ -1,10 +1,9 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import App from './App';
+import MyGroups from '../MyGroups';
 
-describe('App', () => {
+describe('MyGroups page', () => {
 	it('renders without crashing', () => {
-		render(<App />);
+		render(<MyGroups />);
 	});
 });
-

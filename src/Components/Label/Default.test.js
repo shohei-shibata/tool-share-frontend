@@ -1,10 +1,9 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import App from './App';
+import LabelDefault from './Default';
 
-describe('App', () => {
+describe('Default Label', () => {
 	it('renders without crashing', () => {
-		render(<App />);
+		render(<LabelDefault />);
 	});
 });
-

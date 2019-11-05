@@ -1,5 +1,5 @@
 {
-  "homepage": "https://shohei-shibata.github.io/tool-share-frontend",
+  "homepage": "https://team-buildme.github.io/tool-share-frontend",
   "name": "tool-share-frontend",
   "version": "0.1.0",
   "private": true,
@@ -33,14 +33,7 @@
     ]
   },
   "devDependencies": {
-    "enzyme": "^3.10.0",
-    "enzyme-adapter-react-16": "^1.14.0",
+    "@testing-library/react": "^9.3.0",
     "gh-pages": "^2.1.1"
-  },
-  "jest": {
-    "testRegex": "((\\.|/*.)(spec))\\.js?$",
-    "setupFilesAfterEnv": [
-    	"<rootDir>/jest.setup.js"
-    ]
   }
 }
