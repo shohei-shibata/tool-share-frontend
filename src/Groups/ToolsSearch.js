@@ -16,7 +16,7 @@ const getCheckedGroupsArray = (groupsState) => {
 };
 
 const ToolsSearch = () => {
-	const userTools = useUserTools();
+	const userTools = useUserTools().data;
 	const userGroups = useUserGroups();
 
 	const placeholder = 'Type in a tool name';
@@ -54,7 +54,7 @@ const ToolsSearch = () => {
 	};
 	const groupsList = groups.map(group => {
 		return (
-			<li key={group._id}>
+			<li key={group.data._id}>
 				<Checkbox 
 					value={group.data._id} 
 					text={group.data.name} 
@@ -83,7 +83,7 @@ const ToolsSearch = () => {
 			</form>
 			<div>
 				<h3>Search Results:</h3>
-				<ul>{ tools.length > 0 ? <ToolsList tools={tools} /> : <li>No Matches!</li> }</ul>
+				<ul>{ tools && tools.length > 0 ? <ToolsList tools={tools} /> : <li>No Matches!</li> }</ul>
 			</div>
 		</div>
 	);

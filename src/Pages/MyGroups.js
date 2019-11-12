@@ -10,7 +10,7 @@ function MyGroups() {
 			<ul>
 			{
 				groups.map(group => {
-					return <li>{group.name}</li>
+					return <li key={group._id}>{group.name}</li>
 				})
 			}
 			</ul>

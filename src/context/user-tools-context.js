@@ -34,7 +34,7 @@ const UserToolsProvider = (props) => {
 		}));
 	}
 	return <UserToolsContext.Provider value={{
-		tools: tools,
+		data: tools,
 		addTool: addTool,
 		removeTool: removeTool
 	}} {...props} />

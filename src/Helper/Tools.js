@@ -1,5 +1,7 @@
 const Tools = {
 	filterToolsByKeyword: (keyword, tools) => {
+		if (typeof tools !== 'object') { return undefined; }
+		if (tools.length < 1) { return undefined; }
 		return keyword.length > 0 ?
 			tools.filter(tool => {
 				return nameMatches(keyword, tool.name);

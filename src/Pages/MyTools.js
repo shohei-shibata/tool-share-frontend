@@ -7,7 +7,8 @@ import Checkbox from '../Components/Input/Checkbox';
 import ButtonDefault from '../Components/Button/Default';
 
 function MyTools() {
-	const {tools, addTool, removeTool} = useUserTools();
+	const {data, addTool, removeTool} = useUserTools();
+	const tools = data;
 	const user = useUser();
 	const groups = useUserGroups();
 	const newToolInitialState = {
