@@ -66,8 +66,6 @@ const ToolsSearch = () => {
 	});
 	return (
 		<div id='tool-search'>
-			<p>{JSON.stringify(userTools)}</p>
-			<p>{JSON.stringify(userGroups)}</p>
 			<form onSubmit={handleSubmit}>
 				<TextInput 
 					data-testid='search-input'
@@ -83,7 +81,7 @@ const ToolsSearch = () => {
 			</form>
 			<div>
 				<h3>Search Results:</h3>
-				<ul>{ tools && tools.length > 0 ? <ToolsList tools={tools} /> : <li>No Matches!</li> }</ul>
+				<ul>{ tools && tools.length > 0 ? <ToolsList tools={tools} withOwner={true}/> : <li>No Matches!</li> }</ul>
 			</div>
 		</div>
 	);
