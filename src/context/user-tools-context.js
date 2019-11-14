@@ -7,6 +7,16 @@ const UserToolsContext = React.createContext();
 const UserToolsProvider = (props) => {
 	const user = useUser();
 	const [tools, setTools] = useState(Api.getToolsByGroupIds(user.groupBelong));
+	const getToolById = (toolId) => {
+	  const toolFound = tools.filter(tool => {
+	    return tool._id === toolId;
+	  });
+	  if (toolFound.length === 1) {
+	    return toolFound[0];
+	  } else {
+	    return null;
+	  }
+	}
 	const addTool = (tool) => {
 		// requirements
 		// - must have name
@@ -35,7 +45,19 @@ const UserToolsProvider = (props) => {
 	}
 	const requestTool = (toolId, userId, callback) => {
 	  console.log('requestTool', toolId, userId);
-	  callback(true);
+	  let success = false;
+	  let toolFound = getToolById(toolId);
+	  const request = {
+	    userId: userId,
+	    date: Date.now()
+	  };
+	  if (toolFound) {
+	    toolFound.requests.push(request);
+	    success = true;
+	    console.log('updating tool', toolFound);
+	    updateTool(toolFound);
+	  }
+	  callback(success);
 	}
 	const updateTool = (updatedTool) => {
 		console.log('updateTool', updatedTool);
@@ -50,6 +72,7 @@ const UserToolsProvider = (props) => {
 	}
 	return <UserToolsContext.Provider value={{
 		data: tools,
+		getToolById: getToolById,
 		addTool: addTool,
 		removeTool: removeTool,
 		requestTool: requestTool,

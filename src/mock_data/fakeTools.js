@@ -2,7 +2,7 @@ const fakeTools = [{
     "_id": "1",
     "name": "hammer",
     "owner": {
-	    _id: "124",
+	    _id: "123",
 	    name: 'John'
     },
     "accessibleGroups": ["9", "7"],

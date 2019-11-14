@@ -20,6 +20,7 @@ const ToolsSearch = () => {
 	const { data, requestTool } = useUserTools();
 	const userTools = data;
 	const userGroups = useUserGroups();
+
 	const placeholder = 'Type in a tool name';
 	const initialTextInput = '';
 	const groupsInitialState = userGroups.map(group => {
