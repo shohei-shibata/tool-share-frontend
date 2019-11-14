@@ -1,12 +1,18 @@
 import React from 'react';
 
-const ToolsList = ({tools, withOwner}) => {
+const ToolsList = ({tools, withOwner, onClick}) => {
 	return (
-		tools && typeof tools == 'object' ?
-			tools.map(tool => {
-				return <li key={tool._id}>{ withOwner ? tool.name : `${tool.name} (${tool.owner.name})`}</li> 
+		<ul>
+		  {tools && typeof tools == 'object' ?
+		  	tools.map(tool => {
+				  return <li key={tool._id} onClick={onClick}>{ withOwner ? 
+				  		`${tool.name} (${tool.owner.name})` : 
+						tool.name }
+					</li> 
 			}) :
 			<li>No tools found!</li>
+		  }
+		</ul>
 	);
 }
 

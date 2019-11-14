@@ -6,7 +6,6 @@ function MyGroups() {
 	return (
 		<div>
 			<h2>My Groups</h2>
-			<p>{JSON.stringify(groups)}</p>
 			<ul>
 			{
 				groups.map(group => {

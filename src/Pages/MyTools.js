@@ -32,13 +32,7 @@ function MyTools() {
 			<h2>Add a new Tool</h2>
 			<AddToolForm onSubmit={handleSubmitNewTool} />
 			<h2>Delete a Tool</h2>
-			<ul>
-				{tools.map(tool => {
-					return (
-						<li key={tool._id} onClick={handleRemoveTool}>{tool.name}</li>
-					);
-				})}
-			</ul>
+			<ToolsList tools={tools} onClick={handleRemoveTool} />
 		</div>
 	);
 }

@@ -81,7 +81,7 @@ const ToolsSearch = () => {
 			</form>
 			<div>
 				<h3>Search Results:</h3>
-				<ul>{ tools && tools.length > 0 ? <ToolsList tools={tools} withOwner={true}/> : <li>No Matches!</li> }</ul>
+				{ tools && tools.length > 0 ? <ToolsList tools={tools} withOwner={true}/> : <li>No Matches!</li> }
 			</div>
 		</div>
 	);

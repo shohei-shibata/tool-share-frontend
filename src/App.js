@@ -18,12 +18,12 @@ function App() {
 	  	  <h1>Tools Sharing App</h1>
 	          <nav>
 	            <ul className="nav-links">
-	              <li>
+	              {/*<li>
 	                <Link to="/">Home</Link>
-	              </li>
-	  	      <li>
+	              </li>*/}
+	  	      {/*<li>
 	  		<Link to="/about">About</Link>
-	  	      </li>
+	  	      </li>*/}
 		      <li>
 	                <Link to="/search">Search</Link>
 	              </li>
@@ -38,8 +38,6 @@ function App() {
 	  	      </li>
 	            </ul>
 	          </nav>
-	          <h2>User Info</h2>
-	  	  <p>{JSON.stringify(user)}</p>
 	  	  <Switch>
 	  	    <Route path="/about">
 	  	      <About />
@@ -57,7 +55,7 @@ function App() {
 	  	      <Settings />
 	  	    </Route>
 	            <Route path="/">
-	              <Home />
+	              <Search />
 	            </Route>
 	          </Switch>
 	        </div>
