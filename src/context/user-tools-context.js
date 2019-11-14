@@ -33,10 +33,27 @@ const UserToolsProvider = (props) => {
 			return tool._id !== toolId;
 		}));
 	}
+	const requestTool = (toolId, userId, callback) => {
+	  console.log('requestTool', toolId, userId);
+	  callback(true);
+	}
+	const updateTool = (updatedTool) => {
+		console.log('updateTool', updatedTool);
+		setTools(tools.map(tool => {
+			if (tool._id === updatedTool._id) {
+			  // TO DO: Should sanitize data before updating
+			  return updatedTool;
+			} else {
+			  return tool;
+			}
+		}));
+	}
 	return <UserToolsContext.Provider value={{
 		data: tools,
 		addTool: addTool,
-		removeTool: removeTool
+		removeTool: removeTool,
+		requestTool: requestTool,
+		updateTool: updateTool
 	}} {...props} />
 }
 

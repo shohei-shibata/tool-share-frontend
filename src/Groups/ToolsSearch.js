@@ -3,7 +3,7 @@ import ToolsList from './ToolsList';
 import TextInput from '../Components/Input/Text';
 import Checkbox from '../Components/Input/Checkbox';
 import Tools from '../Helper/Tools';
-
+import {useUser} from '../context/user-context';
 import {useUserTools} from '../context/user-tools-context';
 import {useUserGroups} from '../context/user-groups-context';
 
@@ -16,9 +16,10 @@ const getCheckedGroupsArray = (groupsState) => {
 };
 
 const ToolsSearch = () => {
-	const userTools = useUserTools().data;
+	const user = useUser();
+	const { data, requestTool } = useUserTools();
+	const userTools = data;
 	const userGroups = useUserGroups();
-
 	const placeholder = 'Type in a tool name';
 	const initialTextInput = '';
 	const groupsInitialState = userGroups.map(group => {
@@ -52,6 +53,17 @@ const ToolsSearch = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 	};
+	const handleRequestTool = (toolId) => {
+	  if (window.confirm(`Request to borrow?`)) {
+	  	requestTool(toolId, user._id, (success, errMsg) => {
+		  if (success) { 
+		    alert('Tool Updated'); 
+		  } else {
+		    alert('Tool update failed', errMsg);
+		  }
+		});  
+	  }
+	}
 	const groupsList = groups.map(group => {
 		return (
 			<li key={group.data._id}>
@@ -81,7 +93,10 @@ const ToolsSearch = () => {
 			</form>
 			<div>
 				<h3>Search Results:</h3>
-				{ tools && tools.length > 0 ? <ToolsList tools={tools} withOwner={true}/> : <li>No Matches!</li> }
+				{ tools && tools.length > 0 ? 
+					<ToolsList tools={tools} withOwner={true} onClick={handleRequestTool}/> : 
+					<li>No Matches!</li> 
+				}
 			</div>
 		</div>
 	);

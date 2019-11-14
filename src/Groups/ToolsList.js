@@ -5,7 +5,7 @@ const ToolsList = ({tools, withOwner, onClick}) => {
 		<ul>
 		  {tools && typeof tools == 'object' ?
 		  	tools.map(tool => {
-				  return <li key={tool._id} onClick={onClick}>{ withOwner ? 
+				  return <li key={tool._id} onClick={()=>onClick(tool._id)}>{ withOwner ? 
 				  		`${tool.name} (${tool.owner.name})` : 
 						tool.name }
 					</li> 

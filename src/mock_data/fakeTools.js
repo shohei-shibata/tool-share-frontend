@@ -6,7 +6,8 @@ const fakeTools = [{
 	    name: 'John'
     },
     "accessibleGroups": ["9", "7"],
-    "note": "hit the nail on the head"
+    "note": "hit the nail on the head",
+    "requests": []
 }, {
     "_id": "2",
     "name": "aerator",
@@ -15,7 +16,8 @@ const fakeTools = [{
 	    name: 'Matt'
     },
     "accessibleGroups": ["9"],
-    "note": "put holes in ground"
+    "note": "put holes in ground",
+    "requests": []
 }, {
     "_id": "3",
     "name": "powerwash",
@@ -24,7 +26,8 @@ const fakeTools = [{
 	    name: 'Steve'
     },
     "accessibleGroups": ["8", "7"],
-    "note": "water sold separated"
+    "note": "water sold separated",
+    "requests": []
 }];
 
 export default fakeTools;
