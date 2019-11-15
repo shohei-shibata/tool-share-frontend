@@ -1,8 +1,16 @@
 import React from 'react';
 
 function Request({req}) {
+	const acceptRequest = () => {
+		alert(`accept request for ${req.tool.name} by ${req.user.name}`);
+		// add action here
+	}
+	const rejectRequest = () => {
+		alert(`reject request for ${req.tool.name} by ${req.user.name}`);
+		// add action here
+	}
 	return (
-		<li>{req.data.user.name}, {req.tool.name}</li>
+		<li>{req.user.name}, {req.tool.name} <button onClick={acceptRequest}>Accept</button>  <button onClick={rejectRequest}>Reject</button></li>
 	);
 }
 
@@ -12,7 +20,8 @@ function RequestsList({tools}) {
 		if (tool.requests && tool.requests.length > 0) {
 			requests = [...requests, ...tool.requests.map(req => {
 				return {
-					data: req,
+					_id: req._id,
+					user: req.user,
 					tool: {
 						_id: tool._id,
 						name: tool.name
@@ -22,13 +31,13 @@ function RequestsList({tools}) {
 		}
 	});
 	return (
-		<div>
+		<ul>
 			{
 				requests.map(req => {
-					return <Request key={req.data._id} req={req} />;
+					return <Request key={req._id} req={req} />;
 				})
 			}
-		</div>
+		</ul>
 	);
 }
 
