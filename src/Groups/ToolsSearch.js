@@ -55,7 +55,7 @@ const ToolsSearch = () => {
 	};
 	const handleRequestTool = (toolId) => {
 	  if (window.confirm(`Request to borrow?`)) {
-	  	requestTool(toolId, user._id, (success, errMsg) => {
+	  	requestTool(toolId, user, (success, errMsg) => {
 		  if (success) { 
 		    alert('Tool Updated'); 
 		  } else {
@@ -94,7 +94,7 @@ const ToolsSearch = () => {
 			<div>
 				<h3>Search Results:</h3>
 				{ tools && tools.length > 0 ? 
-					<ToolsList tools={tools} withOwner={true} onClick={handleRequestTool}/> : 
+					<ToolsList tools={tools} onClick={handleRequestTool}/> : 
 					<li>No Matches!</li> 
 				}
 			</div>

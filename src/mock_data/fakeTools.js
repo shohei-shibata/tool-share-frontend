@@ -7,7 +7,16 @@ const fakeTools = [{
     },
     "accessibleGroups": ["9", "7"],
     "note": "hit the nail on the head",
-    "requests": []
+    "requests": [
+      {
+	date: 1573815730353,
+	user: {_id: "123", name: "John"}
+      },
+      {
+	date: 1573815730999,
+	user: {_id: "125", name: "Matt"}
+      }
+    ]
 }, {
     "_id": "2",
     "name": "aerator",

@@ -20,10 +20,19 @@ function MyTools() {
 		  alert('error finding tool to delete');
 		}
 	}
+	//definitely refactor requests to a helper file
+	let requests = [];
+	ownTools.forEach(tool => {
+	  requests = [...requests, ...tool.requests];
+	});
+	console.log(requests);
 	return (
 		<div>
 			<h2>My Tools</h2>
 			<ToolsList tools={ownTools} />
+			<h2>Requests for My Tools</h2>
+			<ul>
+			</ul>
 			<h2>Add a new Tool</h2>
 			<AddToolForm onSubmit={handleSubmitNewTool} />
 			<h2>Delete a Tool</h2>

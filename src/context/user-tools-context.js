@@ -7,9 +7,11 @@ const UserToolsContext = React.createContext();
 const UserToolsProvider = (props) => {
 	const user = useUser();
 	const [availableTools/*, setAvailableTools*/] = useState(() => {
-		return Api.getToolsByGroupIds(user.groupBelong).filter(tool => {
+		/*return Api.getToolsByGroupIds(user.groupBelong).filter(tool => {
 		  return tool.owner._id !== user._id;
-		});
+		});*/
+		// Temporary: Returning tool list including my own for making requests to myself.
+		return Api.getToolsByGroupIds(user.groupBelong);
 	});
 	const [ownTools, setOwnTools] = useState(Api.getOwnTools(user._id));
 
@@ -24,12 +26,14 @@ const UserToolsProvider = (props) => {
 	    return null;
 	  }
 	}
-	const requestTool = (toolId, userId, callback) => {
-	  console.log('requestTool', toolId, userId);
+	const requestTool = (toolId, requestor, callback) => {
 	  let success = false;
 	  let toolFound = getToolById(toolId);
 	  const request = {
-	    userId: userId,
+	    user: {
+	    	_id: requestor._id,
+		name: requestor.name
+	    },
 	    date: Date.now()
 	  };
 	  if (toolFound) {
