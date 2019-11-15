@@ -6,9 +6,16 @@ const UserToolsContext = React.createContext();
 
 const UserToolsProvider = (props) => {
 	const user = useUser();
-	const [tools, setTools] = useState(Api.getToolsByGroupIds(user.groupBelong));
+	const [availableTools/*, setAvailableTools*/] = useState(() => {
+		return Api.getToolsByGroupIds(user.groupBelong).filter(tool => {
+		  return tool.owner._id !== user._id;
+		});
+	});
+	const [ownTools, setOwnTools] = useState(Api.getOwnTools(user._id));
+
+	// methods for availableTools
 	const getToolById = (toolId) => {
-	  const toolFound = tools.filter(tool => {
+	  const toolFound = availableTools.filter(tool => {
 	    return tool._id === toolId;
 	  });
 	  if (toolFound.length === 1) {
@@ -16,32 +23,6 @@ const UserToolsProvider = (props) => {
 	  } else {
 	    return null;
 	  }
-	}
-	const addTool = (tool) => {
-		// requirements
-		// - must have name
-		// - no duplicate names
-		// - assign an id
-		if (tool.name.length < 1) { 
-			console.log('New tool name must be assigned');
-			return;
-		} 
-		const arr = tools.filter(item => {
-			return item.name === tool.name;
-		});
-		if (arr.length > 0) {
-			console.log('Tool name already exists');
-			return;
-		}
-		// temp method for setting id... will eventually get assigned in backend
-		tool._id = (Math.random() * 1000).toFixed(0) ;
-		setTools([...tools, tool]);
-	}
-	const removeTool = (toolId) => {
-		console.log('removeTool', toolId);
-		setTools(tools.filter(tool => {
-			return tool._id !== toolId;
-		}));
 	}
 	const requestTool = (toolId, userId, callback) => {
 	  console.log('requestTool', toolId, userId);
@@ -59,9 +40,39 @@ const UserToolsProvider = (props) => {
 	  }
 	  callback(success);
 	}
+
+	// methods for ownTools
+	const addTool = (newTool) => {
+	  	// add to own tools list
+		// requirements
+		// - must have name
+		// - no duplicate names
+		// - assign an id
+		if (newTool.name.length < 1) { 
+			console.log('New tool name must be assigned');
+			return;
+		} 
+		const arr = ownTools.filter(item => {
+			return item.name === newTool.name;
+		});
+		if (arr.length > 0) {
+			console.log('Tool name already exists');
+			return;
+		}
+		// temp method for setting id... will eventually get assigned in backend
+		newTool._id = (Math.random() * 1000).toFixed(0) ;
+		setOwnTools([...ownTools, newTool]);
+	}
+	const removeTool = (toolId) => {
+		console.log('removeTool', toolId);
+		setOwnTools(ownTools.filter(tool => {
+			return tool._id !== toolId;
+		}));
+	}
+	
 	const updateTool = (updatedTool) => {
 		console.log('updateTool', updatedTool);
-		setTools(tools.map(tool => {
+		setOwnTools(ownTools.map(tool => {
 			if (tool._id === updatedTool._id) {
 			  // TO DO: Should sanitize data before updating
 			  return updatedTool;
@@ -71,7 +82,8 @@ const UserToolsProvider = (props) => {
 		}));
 	}
 	return <UserToolsContext.Provider value={{
-		data: tools,
+		availableTools: availableTools,
+		ownTools: ownTools,
 		getToolById: getToolById,
 		addTool: addTool,
 		removeTool: removeTool,

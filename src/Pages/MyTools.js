@@ -4,8 +4,7 @@ import ToolsList from '../Groups/ToolsList';
 import AddToolForm from '../Groups/Forms/AddToolForm';
 
 function MyTools() {
-	const {data, getToolById, addTool, removeTool} = useUserTools();
-	const tools = data;
+	const {ownTools, getToolById, addTool, removeTool} = useUserTools();
 	const handleSubmitNewTool = (newTool) => {
 		addTool(newTool);
 	}
@@ -24,11 +23,11 @@ function MyTools() {
 	return (
 		<div>
 			<h2>My Tools</h2>
-			<ToolsList tools={tools} />
+			<ToolsList tools={ownTools} />
 			<h2>Add a new Tool</h2>
 			<AddToolForm onSubmit={handleSubmitNewTool} />
 			<h2>Delete a Tool</h2>
-			<ToolsList tools={tools} onClick={handleRemoveTool} />
+			<ToolsList tools={ownTools} onClick={handleRemoveTool} />
 		</div>
 	);
 }

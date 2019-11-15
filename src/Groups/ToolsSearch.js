@@ -17,8 +17,7 @@ const getCheckedGroupsArray = (groupsState) => {
 
 const ToolsSearch = () => {
 	const user = useUser();
-	const { data, requestTool } = useUserTools();
-	const userTools = data;
+	const { availableTools, requestTool } = useUserTools();
 	const userGroups = useUserGroups();
 
 	const placeholder = 'Type in a tool name';
@@ -31,13 +30,13 @@ const ToolsSearch = () => {
 	});
 
 	const [ textInput, setTextInput ] = useState(initialTextInput);
-	const [ tools, setTools ] = useState(userTools);
+	const [ tools, setTools ] = useState(availableTools);
 	const [ groups, setGroups ] = useState(groupsInitialState);	
 
 	const handleInputChange = (e) => {
 		const newValue = e.target.value;
 		setTextInput(newValue);
-		setTools(Tools.filterToolsByKeyword(newValue, userTools));
+		setTools(Tools.filterToolsByKeyword(newValue, availableTools));
 	};
 	const handleCheckboxChange = (e) => {
 		let nextGroupsState = groups.map(group => {
@@ -49,7 +48,7 @@ const ToolsSearch = () => {
 		});
 		setGroups(nextGroupsState);
 		let checkedGroupsArray = getCheckedGroupsArray(nextGroupsState);
-		setTools(Tools.filterToolsByGroups(checkedGroupsArray,  userTools)); 
+		setTools(Tools.filterToolsByGroups(checkedGroupsArray, availableTools)); 
 	};
 	const handleSubmit = (e) => {
 		e.preventDefault();
