@@ -29,7 +29,9 @@ const UserToolsProvider = (props) => {
 	const requestTool = (toolId, requestor, callback) => {
 	  let success = false;
 	  let toolFound = getToolById(toolId);
+		let randomInt = Math.round(Math.random()*1000);
 	  const request = {
+			_id: randomInt.toString(),
 	    user: {
 	    	_id: requestor._id,
 		name: requestor.name
