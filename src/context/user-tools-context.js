@@ -29,9 +29,9 @@ const UserToolsProvider = (props) => {
 	const requestTool = (toolId, requestor, callback) => {
 	  let success = false;
 	  let toolFound = getToolById(toolId);
-		let randomInt = Math.round(Math.random()*1000);
+	  let randomInt = Math.round(Math.random()*1000);
 	  const request = {
-			_id: randomInt.toString(),
+	    _id: randomInt.toString(),
 	    user: {
 	    	_id: requestor._id,
 		name: requestor.name
@@ -75,7 +75,6 @@ const UserToolsProvider = (props) => {
 			return tool._id !== toolId;
 		}));
 	}
-	
 	const updateTool = (updatedTool) => {
 		console.log('updateTool', updatedTool);
 		setOwnTools(ownTools.map(tool => {
@@ -87,12 +86,33 @@ const UserToolsProvider = (props) => {
 			}
 		}));
 	}
+	const respondToRequest = (tool, reqId, action) => {
+		let updatedTool = Object.assign({}, tool);
+		//verify that request exits in the tool object
+		switch (action) {
+			case 'ACCEPT': 
+				console.log('accept');
+				//change status to unavailable
+				updatedTool.available = false;
+				//remove request
+				updatedTool.requests.filter(req => {
+					return req._id !== reqId;
+				});
+				break;
+			case 'REJECT':
+				break;
+			default:
+		}
+		console.log('respond to request', updatedTool);
+		//updateTool(updatedTool);	
+	}
 	return <UserToolsContext.Provider value={{
 		availableTools: availableTools,
 		ownTools: ownTools,
 		getToolById: getToolById,
 		addTool: addTool,
 		removeTool: removeTool,
+		respondToRequest: respondToRequest,
 		requestTool: requestTool,
 		updateTool: updateTool
 	}} {...props} />

@@ -7,6 +7,7 @@ const fakeTools = [{
     },
     "accessibleGroups": ["9", "7"],
     "note": "hit the nail on the head",
+    "status": "available",
     "requests": [
       {
 				_id: "4329",
@@ -28,6 +29,7 @@ const fakeTools = [{
     },
     "accessibleGroups": ["9"],
     "note": "put holes in ground",
+    "status": "available",
     "requests": []
 }, {
     "_id": "3",
@@ -38,6 +40,7 @@ const fakeTools = [{
     },
     "accessibleGroups": ["8", "7"],
     "note": "water sold separated",
+    "status": "available",
     "requests": []
 }];
 
