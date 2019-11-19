@@ -6,22 +6,23 @@ const UserToolsContext = React.createContext();
 
 const UserToolsProvider = (props) => {
 	const user = useUser();
-	const [availableTools/*, setAvailableTools*/] = useState(() => {
-		/*return Api.getToolsByGroupIds(user.groupBelong).filter(tool => {
-		  return tool.owner._id !== user._id;
-		});*/
-		// Temporary: Returning tool list including my own for making requests to myself.
+	const [allTools/*, setAllTools*/] = useState(() => {
 		return Api.getToolsByGroupIds(user.groupBelong);
 	});
 	const [ownTools, setOwnTools] = useState(Api.getOwnTools(user._id));
+	const availableTools = allTools; //showing all tools temporarily for test purpose.
+	/* const availableTools = allTools.filter(tool => {
+	 * 	return tool.owner._id !== user._id;
+	 * });
+	 */
 
 	// methods for availableTools
 	const getToolById = (toolId) => {
-	  const toolFound = availableTools.filter(tool => {
+	  const toolFound = availableTools.find(tool => {
 	    return tool._id === toolId;
 	  });
-	  if (toolFound.length === 1) {
-	    return toolFound[0];
+	  if (toolFound) {
+	    return toolFound;
 	  } else {
 	    return null;
 	  }
@@ -30,13 +31,16 @@ const UserToolsProvider = (props) => {
 	  let success = false;
 	  let toolFound = getToolById(toolId);
 	  let randomInt = Math.round(Math.random()*1000);
+	  // use a class to create request object
 	  const request = {
 	    _id: randomInt.toString(),
 	    user: {
 	    	_id: requestor._id,
 		name: requestor.name
 	    },
-	    date: Date.now()
+	    date: Date.now(),
+	    pending: true,
+	    borrowing: false
 	  };
 	  if (toolFound) {
 	    toolFound.requests.push(request);
@@ -86,25 +90,34 @@ const UserToolsProvider = (props) => {
 			}
 		}));
 	}
-	const respondToRequest = (tool, reqId, action) => {
-		let updatedTool = Object.assign({}, tool);
+	const respondToRequest = (toolId, reqId, action) => {
+		let updatedTool = ownTools.find(tool => {
+			return tool._id === toolId;
+		});
 		//verify that request exits in the tool object
 		switch (action) {
 			case 'ACCEPT': 
-				console.log('accept');
 				//change status to unavailable
 				updatedTool.available = false;
-				//remove request
-				updatedTool.requests.filter(req => {
-					return req._id !== reqId;
+				//update request status
+				updatedTool.requests.forEach((req, index, arr) => {
+					if (req._id === reqId) {
+						let updatedReq = Object.assign({}, req);
+						updatedReq.pending = false;
+						updatedReq.borrowing = true;
+						arr[index] = updatedReq;
+					}
 				});
 				break;
 			case 'REJECT':
+				// Same as ACCEPT... combine
+				updatedTool.requests = updatedTool.requests.filter(req => {
+					return req._id !== reqId;
+				});
 				break;
 			default:
 		}
-		console.log('respond to request', updatedTool);
-		//updateTool(updatedTool);	
+		updateTool(updatedTool);	
 	}
 	return <UserToolsContext.Provider value={{
 		availableTools: availableTools,

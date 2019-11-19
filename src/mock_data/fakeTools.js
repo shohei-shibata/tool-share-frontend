@@ -10,14 +10,18 @@ const fakeTools = [{
     "status": "available",
     "requests": [
       {
-				_id: "4329",
-				date: 1573815730353,
-				user: {_id: "123", name: "John"}
+	_id: "4329",
+	date: 1573815730353,
+	user: {_id: "123", name: "John"},
+	pending: true,
+	borrowing: false
       },
       {
-				_id: "5829",
-				date: 1573815730999,
-				user: {_id: "125", name: "Matt"}
+	_id: "5829",
+	date: 1573815730999,
+	user: {_id: "125", name: "Matt"},
+	pending: true,
+	borrowing: false
       }
     ]
 }, {

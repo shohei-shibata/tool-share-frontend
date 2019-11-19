@@ -1,19 +1,20 @@
 import React from 'react';
 import {useUserTools} from '../context/user-tools-context';
 
-function Request({tool, reqId}) {
+function Request({req}) {
 	const respondToRequest = useUserTools().respondToRequest;	
-	const req = tool.requests.filter(request => {
-		return request._id === reqId;
-	});
+	const ACCEPT = 'ACCEPT';
+	const REJECT = 'REJECT';
+	// should refactor to combine accept/reject functions
 	const acceptRequest = () => {
-		alert(`accept request for ${tool.name} by ${req.user.name}`);
+		alert(`accept request for ${req.tool.name} by ${req.user.name}`);
 		// add action here
-		respondToRequest(
+		respondToRequest(req.tool._id, req._id, ACCEPT);
 	}
 	const rejectRequest = () => {
 		alert(`reject request for ${req.tool.name} by ${req.user.name}`);
 		// add action here
+		respondToRequest(req.tool._id, req._id, REJECT);
 	}
 	return (
 		<li>{req.user.name}, {req.tool.name} <button onClick={acceptRequest}>Accept</button>  <button onClick={rejectRequest}>Reject</button></li>
