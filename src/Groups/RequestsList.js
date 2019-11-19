@@ -16,9 +16,13 @@ function Request({req}) {
 		// add action here
 		respondToRequest(req.tool._id, req._id, REJECT);
 	}
-	return (
-		<li>{req.user.name}, {req.tool.name} <button onClick={acceptRequest}>Accept</button>  <button onClick={rejectRequest}>Reject</button></li>
-	);
+	if (req.pending) {
+	  return (
+		  <li>{req.user.name}, {req.tool.name} <button onClick={acceptRequest}>Accept</button>  <button onClick={rejectRequest}>Reject</button></li>
+	  );
+	} else {
+	  return null;
+	}
 }
 
 function RequestsList({tools}) {
@@ -28,6 +32,7 @@ function RequestsList({tools}) {
 			requests = [...requests, ...tool.requests.map(req => {
 				return {
 					_id: req._id,
+					pending: req.pending,
 					user: req.user,
 					tool: {
 						_id: tool._id,
