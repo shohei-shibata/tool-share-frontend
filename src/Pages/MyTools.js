@@ -1,7 +1,7 @@
 import React from 'react';
 import {useUserTools} from '../context/user-tools-context';
-import ToolsList from '../Groups/ToolsList';
-import RequestsList from '../Groups/RequestsList';
+import ToolsList from '../Groups/List/Tools';
+import RequestsList from '../Groups/List/Requests';
 import AddToolForm from '../Groups/Forms/AddToolForm';
 
 

@@ -33,9 +33,9 @@ function App() {
 		      <li>
 	                <Link to="/my-groups">My Groups</Link>
 	              </li>
-	  	      <li>
+	  	      {/*<li>
 	  		<Link to="/settings">Settings</Link>
-	  	      </li>
+	  	      </li>*/}
 	            </ul>
 	          </nav>
 	  	  <Switch>
