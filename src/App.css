@@ -7,6 +7,18 @@
 	list-style-type: none;
 }
 
+/*
+ * COMPONENTS
+ */
+
+.card {
+  border: 1px solid black;
+  border-radius: 2px;
+  padding: 5px;
+  max-width: 200px;
+  text-align: center;
+}
+
 #tool-search li {
 	list-style-type: none;
 }
