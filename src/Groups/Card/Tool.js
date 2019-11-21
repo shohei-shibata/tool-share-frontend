@@ -41,7 +41,14 @@ function OwnerCard({ tool }) {
     <div>
       <h1>{tool.name}</h1>
       <p>{status}</p>
-      <p>Requested by {requests}</p>
+      { requests && requests.length > 0 ?
+	<div>
+	  <p>Requested by</p>
+	  <p>{requests}</p>
+	</div>
+	:
+	<div><p>No pending requests</p></div>
+      }
       <p><Link text='Remove this tool' onClick={handleRemoveTool} /></p>
     </div>
   );
@@ -83,22 +90,23 @@ function Requestor({tool, req}) {
   const respondToRequest = useUserTools().respondToRequest;	
   const ACCEPT = 'ACCEPT';
   const REJECT = 'REJECT';
-  const handleClick = () => {
-
-  }
+  
   // should refactor to combine accept/reject functions
   const acceptRequest = () => {
-	  alert(`accept request for ${tool.name} by ${req.user.name}`);
-	  respondToRequest(tool._id, req._id, ACCEPT);
+	  if (window.confirm(`accept request for ${tool.name} by ${req.user.name}?`)) {
+	    respondToRequest(tool._id, req._id, ACCEPT);
+	  } else {
+	    rejectRequest();
+	  }
   }
   const rejectRequest = () => {
-	  alert(`reject request for ${tool.name} by ${req.user.name}`);
+	  alert(`Request for ${tool.name} by ${req.user.name} has been rejected`);
 	  respondToRequest(tool._id, req._id, REJECT);
   }
   if (req.pending) {
     return (
       <span className='requestor-link'>
-	<Link text={req.user.name} />
+	<Link text={req.user.name} onClick={acceptRequest} />
       </span>
     );
   } else {
