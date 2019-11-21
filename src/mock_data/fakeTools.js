@@ -33,7 +33,7 @@ const fakeTools = [{
     },
     "accessibleGroups": ["9"],
     "note": "put holes in ground",
-    "status": "available",
+    "status": "borrowed",
     "requests": []
 }, {
     "_id": "3",

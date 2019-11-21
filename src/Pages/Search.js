@@ -27,7 +27,10 @@ function Search() {
 
 function ToolsSearch() {
 	const user = useUser();
-	const { availableTools, requestTool } = useUserTools();
+	const { accessibleTools } = useUserTools();
+	const availableTools = accessibleTools.filter(item => {
+	  return item.owner._id !== user._id;
+	});
 	const userGroups = useUserGroups();
 
 	const placeholder = 'Type in a tool name';
@@ -40,7 +43,9 @@ function ToolsSearch() {
 	});
 
 	const [ textInput, setTextInput ] = useState(initialTextInput);
-	const [ tools, setTools ] = useState(availableTools);
+	const [ tools, setTools ] = useState(availableTools.filter(item => {
+	  return user._id !== item.owner._id;
+	}));
 	const [ groups, setGroups ] = useState(groupsInitialState);	
 
 	const handleInputChange = (e) => {
@@ -63,17 +68,6 @@ function ToolsSearch() {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 	};
-	const handleRequestTool = (toolId) => {
-	  if (window.confirm(`Request to borrow?`)) {
-	  	requestTool(toolId, user, (success, errMsg) => {
-		  if (success) { 
-		    alert('Tool Updated'); 
-		  } else {
-		    alert('Tool update failed', errMsg);
-		  }
-		});  
-	  }
-	}
 	const groupsList = groups.map(group => {
 		return (
 			<li key={group.data._id}>
@@ -104,7 +98,7 @@ function ToolsSearch() {
 			<div>
 				<h3>Search Results:</h3>
 				{ tools && tools.length > 0 ? 
-					<ToolsList tools={tools} onClick={handleRequestTool}/> : 
+					<ToolsList tools={tools} /> : 
 					<li>No Matches!</li> 
 				}
 			</div>
